@@ -17,6 +17,7 @@ return new class extends Migration
             $table->integer('age');
             $table->string('email')->unique();
             $table->string('password');
+            $table->string('image')->default('https://store-project.shop/public/img/person.jpg');
             $table->enum('gender', ['male', 'female']);
             $table->string('department');
             $table->string('nationalID')->nullable();

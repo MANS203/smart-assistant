@@ -35,6 +35,7 @@ class AuthController extends Controller
         'email' => $request->email,
         'password' => Hash::make($request->password),
         'gender' => $request->gender,
+        'image' => $request->image,
         'department' => $request->department,
         'nationalID' => $request->nationalID,
         'role' => $request->role,
@@ -60,4 +61,28 @@ class AuthController extends Controller
         $user = Auth::user();
         return response()->json(['status' => true, 'message' => 'Login done successfully' ,'user' => $user, 'token' => $token]);
     }
+
+    public function getProfile(){
+        
+        $user = auth()->user();
+        if(!$user){
+            return response()->json([
+                'status'=>false,
+                'message'=>'User not found',
+            ],404);
+        }
+        return response()->json([
+            'status'=>true,
+            'message'=>'User data',
+            'data'=>$user,
+        ],200);
+
+    }
+
+    public function logout()
+{
+    
+    JWTAuth::invalidate(JWTAuth::getToken());
+    return response()->json(['message' => 'Successfully logged out']);
+}
 }
